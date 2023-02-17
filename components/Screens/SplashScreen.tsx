@@ -1,13 +1,23 @@
 import React from 'react';
 import {Image, View, StyleSheet} from 'react-native';
+import {Button} from 'react-native';
 
-const Splash = () => {
+import {HaboRouteList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
+export type SplashScreenProps = NativeStackScreenProps<HaboRouteList, 'Home'>;
+
+const SplashScreen = ({navigation}: SplashScreenProps) => {
   return (
     <View style={styles.background}>
       <Image
         style={styles.logo}
         source={require('../../assets/images/L0_01_Splash/Logo/White.png')}
         resizeMode="contain"
+      />
+      <Button
+        title="Go to Signup"
+        onPress={() => navigation.navigate('Signup')}
       />
     </View>
   );
@@ -26,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Splash;
+export default SplashScreen;
