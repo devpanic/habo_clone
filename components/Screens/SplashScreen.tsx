@@ -1,23 +1,29 @@
 import React from 'react';
+import {useEffect} from 'react';
 import {Image, View, StyleSheet} from 'react-native';
-import {Button} from 'react-native';
 
 import {HaboRouteList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-export type SplashScreenProps = NativeStackScreenProps<HaboRouteList, 'Home'>;
+export type SplashScreenProps = NativeStackScreenProps<
+  HaboRouteList,
+  'SplashScreen'
+>;
 
 const SplashScreen = ({navigation}: SplashScreenProps) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      navigation.navigate('Signup');
+    }, 3000);
+    return () => clearTimeout(timeout);
+  });
+
   return (
     <View style={styles.background}>
       <Image
         style={styles.logo}
         source={require('../../assets/images/L0_01_Splash/Logo/White.png')}
         resizeMode="contain"
-      />
-      <Button
-        title="Go to Signup"
-        onPress={() => navigation.navigate('Signup')}
       />
     </View>
   );

@@ -24,9 +24,9 @@ const App = () => {
     <>
       <NavigationContainer>
         <RouteStack.Navigator
-          initialRouteName="Home"
+          initialRouteName="SplashScreen"
           screenOptions={{headerShown: false}}>
-          <RouteStack.Screen name="Home" component={SplashScreen} />
+          <RouteStack.Screen name="SplashScreen" component={SplashScreen} />
           <RouteStack.Screen name="Signup" component={SignupScreen} />
           <RouteStack.Screen name="AppleSignup" component={AppleSignupScreen} />
           <RouteStack.Screen name="NaverSignup" component={NaverSignupScreen} />
@@ -39,7 +39,7 @@ const App = () => {
 };
 
 export type HaboRouteList = {
-  Home: undefined;
+  SplashScreen: undefined;
   Signup: undefined;
   AppleSignup: undefined;
   NaverSignup: undefined;
