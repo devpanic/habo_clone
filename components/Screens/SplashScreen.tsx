@@ -13,7 +13,7 @@ export type SplashScreenProps = NativeStackScreenProps<
 const SplashScreen = ({navigation}: SplashScreenProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigation.navigate('Signup');
+      navigation.navigate('Permission');
     }, 3000);
     return () => clearTimeout(timeout);
   });
