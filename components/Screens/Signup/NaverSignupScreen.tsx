@@ -1,6 +1,6 @@
 import React from 'react';
 import {useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, SafeAreaView} from 'react-native';
 
 //use react navigation
 import {HaboRouteList} from '../../../App';
@@ -16,9 +16,9 @@ const NaverSignupScreen = ({navigation}: SplashScreenProps) => {
   });
 
   return (
-    <View>
+    <SafeAreaView>
       <Text>Naver Signup Page</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

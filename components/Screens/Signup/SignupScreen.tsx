@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Image,
   View,
+  SafeAreaView,
   Text,
   StyleSheet,
   ImageBackground,
@@ -65,7 +66,9 @@ const BtnItem = ({oauth, onPress}: oauthProps) => (
       ...styles.btnItem,
       backgroundColor: oauth.backgroundColor,
     }}>
-    <Image style={styles.btnImage} source={oauth.src} resizeMode="contain" />
+    <View style={styles.btnImageWrapper}>
+      <Image style={styles.btnImage} source={oauth.src} resizeMode="contain" />
+    </View>
     <Text style={styles.btnText}>{oauth.kor}계정으로 로그인</Text>
   </TouchableOpacity>
 );
@@ -73,12 +76,12 @@ const BtnItem = ({oauth, onPress}: oauthProps) => (
 const SignupScreen = ({navigation}: SplashScreenProps) => {
   const renderItem: ListRenderItem<oauthData> = ({item}) => {
     return (
-      <BtnItem oauth={item} onPress={() => navigation.navigate(item.nav)} />
+      <BtnItem oauth={item} onPress={() => navigation.navigate(item.nav as any)} />
     );
   };
 
   return (
-    <View style={styles.signupContainer}>
+    <SafeAreaView style={styles.signupContainer}>
       <View style={styles.topLogoContainer}>
         <ImageBackground
           style={styles.backgroundImage}
@@ -92,14 +95,15 @@ const SignupScreen = ({navigation}: SplashScreenProps) => {
         </ImageBackground>
       </View>
       <View style={styles.btnContainer}>
-        <FlatList data={oauth} renderItem={renderItem} />
+        {/* TODO: move inline styles to component styles */}
+        <FlatList data={oauth} renderItem={renderItem} style={{'width': '100%', 'paddingLeft': 16, 'paddingRight': 16}} />
         <TouchableOpacity
           onPress={() => navigation.navigate('NonMember')}
           style={styles.nonMemberBtn}>
           <Text style={{color: 'white'}}>비회원으로 둘러보기</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -107,6 +111,7 @@ const styles = StyleSheet.create({
   signupContainer: {
     flex: 1,
     backgroundColor: 'black',
+    width: '100%',
   },
   topLogoContainer: {
     flex: 1,
@@ -119,39 +124,48 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 195,
-    height: 36,
   },
   btnContainer: {
     alignItems: 'center',
+    width: '100%',
   },
   btnItem: {
-    width: 343,
-    height: 56,
-    marginLeft: 8,
-    marginRight: 8,
-    marginVertical: 12,
+    position: 'relative',
+    marginVertical: 6,
+    width: '100%',
+    padding: 16,
+    display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'center',
+    textAlign: 'left',
+  },
+  btnImageWrapper: {
+    position: 'absolute',
+    left: 16,
+    top: 0,
+    bottom: 0,
+    marginHorizontal: 0,
+    marginVertical: 'auto',
+    alignItems: 'center',
+    // width: 24
   },
   btnImage: {
     width: 24,
-    height: 24,
-    flexBasis: 56,
+    height: "100%",
   },
   btnText: {
-    color: 'black',
-    position: 'absolute',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    left: 0,
-    right: 0,
     textAlign: 'center',
+    width: '100%',
+    marginVertical: 0,
+    marginHorizontal: 'auto',
   },
   nonMemberBtn: {
-    width: 343,
-    height: 56,
+    width: "100%",
     alignItems: 'center',
     justifyContent: 'flex-end',
+    marginTop: 26,
+    marginBottom: 10,
   },
   textColor: {
     color: 'black',

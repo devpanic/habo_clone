@@ -1,6 +1,6 @@
 import React from 'react';
 import {useEffect} from 'react';
-import {Image, View, StyleSheet} from 'react-native';
+import {Image, View, StyleSheet, SafeAreaView} from 'react-native';
 
 import {HaboRouteList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -19,13 +19,13 @@ const SplashScreen = ({navigation}: SplashScreenProps) => {
   });
 
   return (
-    <View style={styles.background}>
+    <SafeAreaView style={styles.background}>
       <Image
         style={styles.logo}
         source={require('../../assets/images/L0_01_Splash/Logo/White.png')}
         resizeMode="contain"
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
