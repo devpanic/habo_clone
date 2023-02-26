@@ -17,6 +17,7 @@ import NaverSignupScreen from './components/Screens/Signup/NaverSignupScreen';
 import KakaoSignupScreen from './components/Screens/Signup/KakaoSignupScreen';
 import NonMemberScreen from './components/Screens/Signup/NonMemberScreen';
 import Permission from './components/Screens/Permission';
+import SignupFormScreen from './components/Screens/Signup/SignupFormScreen';
 
 const RouteStack = createNativeStackNavigator<HaboRouteList>();
 
@@ -34,6 +35,7 @@ const App = () => {
           <RouteStack.Screen name="KakaoSignup" component={KakaoSignupScreen} />
           <RouteStack.Screen name="NonMember" component={NonMemberScreen} />
           <RouteStack.Screen name="Permission" component={Permission} />
+          <RouteStack.Screen name="SignupForm" component={SignupFormScreen} />
         </RouteStack.Navigator>
       </NavigationContainer>
     </>
@@ -48,6 +50,7 @@ export type HaboRouteList = {
   KakaoSignup: undefined;
   NonMember: undefined;
   Permission: undefined;
+  SignupForm: undefined;
 };
 
 export default App;

@@ -14,6 +14,7 @@ const Permission = ({navigation}: SplashScreenProps) => {
           앱 이용을 위해 권한을 {'\n'}
           설정해 주세요.
         </Text>
+        <Text style={{color: 'white'}}>테스트</Text>
       </View>
       <View>
         <Image
