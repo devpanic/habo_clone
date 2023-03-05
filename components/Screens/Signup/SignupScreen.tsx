@@ -15,12 +15,12 @@ import {
 //use react navigation
 import {HaboRouteList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-export type SplashScreenProps = NativeStackScreenProps<HaboRouteList>;
+export type SplashScreenProps = NativeStackScreenProps<HaboRouteList, 'Signup'>;
 
 //import button images
-import AppleBtn from '../../../assets/images/L0_03_Login/Apple.png';
-import KakaoBtn from '../../../assets/images/L0_03_Login/Kakao.png';
-import NaverBtn from '../../../assets/images/L0_03_Login/Naver.png';
+import AppleBtn from 'images/L0_03_Login/Apple.png';
+import KakaoBtn from 'images/L0_03_Login/Kakao.png';
+import NaverBtn from 'images/L0_03_Login/Naver.png';
 
 type oauthData = {
   platform: string;
@@ -76,7 +76,10 @@ const BtnItem = ({oauth, onPress}: oauthProps) => (
 const SignupScreen = ({navigation}: SplashScreenProps) => {
   const renderItem: ListRenderItem<oauthData> = ({item}) => {
     return (
-      <BtnItem oauth={item} onPress={() => navigation.navigate(item.nav as any)} />
+      <BtnItem
+        oauth={item}
+        onPress={() => navigation.navigate(item.nav as any)}
+      />
     );
   };
 
@@ -96,7 +99,11 @@ const SignupScreen = ({navigation}: SplashScreenProps) => {
       </View>
       <View style={styles.btnContainer}>
         {/* TODO: move inline styles to component styles */}
-        <FlatList data={oauth} renderItem={renderItem} style={{'width': '100%', 'paddingLeft': 16, 'paddingRight': 16}} />
+        <FlatList
+          data={oauth}
+          renderItem={renderItem}
+          style={{width: '100%', paddingLeft: 16, paddingRight: 16}}
+        />
         <TouchableOpacity
           onPress={() => navigation.navigate('NonMember')}
           style={styles.nonMemberBtn}>
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
   },
   btnImage: {
     width: 24,
-    height: "100%",
+    height: '100%',
   },
   btnText: {
     textAlign: 'center',
@@ -161,7 +168,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
   },
   nonMemberBtn: {
-    width: "100%",
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-end',
     marginTop: 26,

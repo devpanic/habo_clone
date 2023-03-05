@@ -1,10 +1,9 @@
 import React from 'react';
 import {useEffect} from 'react';
-import {Image, View, StyleSheet, SafeAreaView} from 'react-native';
+import {Image, StyleSheet, SafeAreaView} from 'react-native';
 
 import {HaboRouteList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-
 export type SplashScreenProps = NativeStackScreenProps<
   HaboRouteList,
   'SplashScreen'

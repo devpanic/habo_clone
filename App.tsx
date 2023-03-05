@@ -18,6 +18,9 @@ import KakaoSignupScreen from './components/Screens/Signup/KakaoSignupScreen';
 import NonMemberScreen from './components/Screens/Signup/NonMemberScreen';
 import Permission from './components/Screens/Permission';
 import SignupFormScreen from './components/Screens/Signup/SignupFormScreen';
+import MusicTasteWhereScreen from './components/Screens/Signup/MusicTasteWhereScreen';
+import MusicTasteGenreScreen from './components/Screens/Signup/MusicTasteGenreScreen';
+import MusicTasteMoodScreen from './components/Screens/Signup/MusicTasteMoodScreen';
 
 const RouteStack = createNativeStackNavigator<HaboRouteList>();
 
@@ -36,6 +39,18 @@ const App = () => {
           <RouteStack.Screen name="NonMember" component={NonMemberScreen} />
           <RouteStack.Screen name="Permission" component={Permission} />
           <RouteStack.Screen name="SignupForm" component={SignupFormScreen} />
+          <RouteStack.Screen
+            name="MusicTasteWhere"
+            component={MusicTasteWhereScreen}
+          />
+          <RouteStack.Screen
+            name="MusicTasteGenre"
+            component={MusicTasteGenreScreen}
+          />
+          <RouteStack.Screen
+            name="MusicTasteMood"
+            component={MusicTasteMoodScreen}
+          />
         </RouteStack.Navigator>
       </NavigationContainer>
     </>
@@ -51,6 +66,9 @@ export type HaboRouteList = {
   NonMember: undefined;
   Permission: undefined;
   SignupForm: undefined;
+  MusicTasteWhere: undefined;
+  MusicTasteGenre: undefined;
+  MusicTasteMood: undefined;
 };
 
 export default App;
