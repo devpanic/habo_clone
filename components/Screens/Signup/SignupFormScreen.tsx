@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useState} from 'react';
 
 import {
@@ -62,11 +62,43 @@ const countryMap: CountryMap = {
 };
 
 const SignupFormScreen = ({navigation}: SplashScreenProps) => {
-  const {handleSubmit, control} = useForm<FormValues>();
+  const defaultValues = {
+    email: 'abc@gmail.com', //TODO get email from oauth
+  }
+
+  const {handleSubmit, control, reset} = useForm<FormValues>();
+
+  useEffect(() => {
+    reset({ ...defaultValues });
+   }, []);
+
   const [nickNameFocus, setNickNameFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
-  const checked: boolean[] = [false, false, false, false];
+  const [totalAgreed, setTotalAgreed] = useState<boolean>(false); // 전체 동의
+  const [serviceTermAgreed, setServiceTermAgreed] = useState<boolean>(false); // (필수) 서비스 이용약관에 동의
+  const [privacyTermAgreed, setPrivacyTermAgreed] = useState<boolean>(false); // (필수) 개인정보 처리방침에 동의
+  const [marketingTermAgreed, setMarketTermAgreed] = useState<boolean>(false); // (선택) 마케팅 이용에 동의
+
+  useEffect(() => {
+    if (totalAgreed) {
+      setServiceTermAgreed(true);
+      setPrivacyTermAgreed(true);
+      setMarketTermAgreed(true);
+    } else if (!totalAgreed && serviceTermAgreed && privacyTermAgreed && marketingTermAgreed) {
+      setServiceTermAgreed(false);
+      setPrivacyTermAgreed(false);
+      setMarketTermAgreed(false);
+    }
+  }, [totalAgreed]);
+
+  useEffect(() => {
+    if (serviceTermAgreed && privacyTermAgreed && marketingTermAgreed) {
+      setTotalAgreed(true)
+    } else {
+      setTotalAgreed(false);
+    }
+  }, [serviceTermAgreed, privacyTermAgreed, marketingTermAgreed]);
 
   const checkboxImage = () => {
     return (
@@ -83,10 +115,10 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
   };
 
   const onSubmit = (data: FormValues) => {
-    // Alert.alert(JSON.stringify(data));
+    Alert.alert(JSON.stringify(data));
     if (!validateEmail(data.email)) {
       // not a valid email
-      Alert.alert('이메일이 유효하지 않습니다');
+      // Alert.alert('이메일이 유효하지 않습니다');
     } else {
       // valid email
       Alert.alert('이메일 굿!');
@@ -164,6 +196,7 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
               <Controller
                 control={control}
                 name="email"
+                defaultValue=''
                 render={({field: {onChange, value}}) => (
                   <TextInput
                     style={styles.textInput}
@@ -239,6 +272,8 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
               )}
             </View>
           </View>
+
+          {/* 전체 동의 */}
           <View style={styles.signupFormSubContainer}>
             <View style={styles.signupFormCheckboxOverall}>
               <View style={styles.signupFormCheckboxWrapper}>
@@ -247,107 +282,130 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
                   name="agreement.0"
                   render={({field: {onChange}}) => (
                     <BouncyCheckbox
-                      isChecked={checked[0]}
-                      onPress={(isChecked: boolean) => {
-                        onChange(isChecked);
-                        checked[0] = !checked[0];
+                      isChecked={totalAgreed}
+                      onPress={() => {
+                        onChange(!totalAgreed);
+                        setTotalAgreed(!totalAgreed);
                       }}
+                      disableBuiltInState
                       style={
-                        checked[0] ? styles.checkboxNotChecked : styles.checkbox
+                        totalAgreed ? styles.checkboxNotChecked : styles.checkbox
                       }
                       innerIconStyle={styles.checkboxBorder}
                       iconStyle={styles.checkboxBorder}
                       fillColor="#CFFF10"
                       ImageComponent={checkboxImage}
+                      textComponent={
+                        <Text style={styles.signupFormCheckboxText}>
+                          전체 동의
+                        </Text>
+                      }
                     />
                   )}
                 />
-                <Text style={styles.signupFormCheckboxText}>전체 동의</Text>
+                
               </View>
             </View>
+
+            {/* 서비스 이용약관 동의 */}
             <View style={styles.signupFormCheckboxWrapper}>
               <Controller
                 control={control}
                 name="agreement.1"
                 render={({field: {onChange}}) => (
                   <BouncyCheckbox
-                    isChecked={checked[1]}
-                    onPress={(isChecked: boolean) => {
-                      onChange(isChecked);
-                      checked[1] = !checked[1];
+                    isChecked={serviceTermAgreed}
+                    onPress={() => {
+                      onChange(!serviceTermAgreed);
+                      setServiceTermAgreed(!serviceTermAgreed);
                     }}
                     style={
-                      checked[1] ? styles.checkboxNotChecked : styles.checkbox
+                      serviceTermAgreed ? styles.checkboxNotChecked : styles.checkbox
                     }
+                    disableBuiltInState
                     innerIconStyle={styles.checkboxBorder}
                     iconStyle={styles.checkboxBorder}
                     fillColor="#CFFF10"
                     ImageComponent={checkboxImage}
+                    textComponent={
+                      <Text style={styles.signupFormCheckboxText}>
+                        (필수) 서비스 이용약관에 동의합니다.
+                      </Text>
+                    }
                   />
                 )}
               />
-              <Text style={styles.signupFormCheckboxText}>
-                (필수) 서비스 이용약관에 동의합니다.
-              </Text>
+              
             </View>
+
+            {/* 개인정보 처리 방침 동의 */}
             <View style={styles.signupFormCheckboxWrapper}>
               <Controller
                 control={control}
                 name="agreement.2"
                 render={({field: {onChange}}) => (
                   <BouncyCheckbox
-                    isChecked={checked[2]}
-                    onPress={(isChecked: boolean) => {
-                      onChange(isChecked);
-                      checked[2] = !checked[2];
+                    isChecked={privacyTermAgreed}
+                    onPress={() => {
+                      onChange(!privacyTermAgreed);
+                      setPrivacyTermAgreed(!privacyTermAgreed);
                     }}
+                    disableBuiltInState
                     style={
-                      checked[2] ? styles.checkboxNotChecked : styles.checkbox
+                      privacyTermAgreed ? styles.checkboxNotChecked : styles.checkbox
                     }
                     innerIconStyle={styles.checkboxBorder}
                     iconStyle={styles.checkboxBorder}
                     fillColor="#CFFF10"
                     ImageComponent={checkboxImage}
+                    textComponent={
+                      <Text style={styles.signupFormCheckboxText}>
+                        (필수) 개인정보 처리방침에 동의합니다.
+                      </Text>
+                    }
                   />
                 )}
               />
-              <Text style={styles.signupFormCheckboxText}>
-                (필수) 개인정보 처리방침에 동의합니다.
-              </Text>
             </View>
+
+            {/* 마케팅 동의 */}
             <View style={styles.signupFormCheckboxWrapper}>
               <Controller
                 control={control}
                 name="agreement.3"
                 render={({field: {onChange}}) => (
                   <BouncyCheckbox
-                    isChecked={checked[3]}
-                    onPress={(isChecked: boolean) => {
-                      onChange(isChecked);
-                      checked[3] = !checked[3];
+                    isChecked={marketingTermAgreed}
+                    onPress={() => {
+                      onChange(!marketingTermAgreed);
+                      setMarketTermAgreed(!marketingTermAgreed);
                     }}
                     style={
-                      checked[3] ? styles.checkboxNotChecked : styles.checkbox
+                      marketingTermAgreed ? styles.checkboxNotChecked : styles.checkbox
                     }
+                    disableBuiltInState
                     innerIconStyle={styles.checkboxBorder}
                     iconStyle={styles.checkboxBorder}
                     fillColor="#CFFF10"
                     ImageComponent={checkboxImage}
+                    textComponent={
+                      <Text style={styles.signupFormCheckboxText}>
+                        (선택) 마케팅 이용에 동의합니다.
+                      </Text>
+                    }
                   />
                 )}
               />
-              <Text style={styles.signupFormCheckboxText}>
-                (선택) 마케팅 이용에 동의합니다.
-              </Text>
             </View>
           </View>
         </View>
       </ScrollView>
       <View style={styles.signupFormFooter}>
-        <View style={styles.signupFormNextBtnWrapper}>
+        <View style={!serviceTermAgreed || !privacyTermAgreed ? styles.signupFormNextBtnWrapperDisabled : styles.signupFormNextBtnWrapper}>
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
-            disabled={(checked[1] && checked[2]) || checked[0] ? true : false}>
+            disabled={!serviceTermAgreed || !privacyTermAgreed}
+          >
             <Text style={styles.nextBtnText}>다음으로</Text>
           </TouchableOpacity>
         </View>
@@ -393,13 +451,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     paddingVertical: 24,
   },
+  signupFormNextBtnWrapperDisabled: {
+    backgroundColor: 'red', // TODO: change style
+    paddingVertical: 24,
+  },
   signupFormSubContainer: {
     marginBottom: 32,
   },
   signupFormSubTitle: {
     marginLeft: 4,
   },
-  signupFormSubTextWrapper: {},
+  signupFormSubTextWrapper: {
+    //TODO android ios layout gap
+  },
   signupFormSubInputWrapperUnfocused: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -419,6 +483,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 126,
     marginRight: 4,
+    //TODO android ios layout gap
   },
   signupFormNickNameValidBtn: {
     height: 28,
@@ -426,6 +491,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     marginRight: 4,
     backgroundColor: 'rgba(0, 0, 0, .1)',
+    //TODO android ios layout gap
   },
   nickNameValidBtnText: {
     fontWeight: '500',
@@ -448,6 +514,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signupFormCheckboxText: {
+    marginLeft: 12,
     fontSize: 14,
     color: '#000000',
   },
@@ -475,16 +542,16 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     marginRight: 12,
-    width: 24,
+    width: '100%',
     height: 24,
     backgroundColor: '#FFFFFF',
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: 'rgba(0, 0, 0, .2)',
     borderRadius: 0,
   },
   checkboxNotChecked: {
     marginRight: 12,
-    width: 24,
+    width: '100%',
     height: 24,
     borderWidth: 0,
     borderColor: '#FFFFFF',
@@ -492,7 +559,8 @@ const styles = StyleSheet.create({
   },
   checkboxBorder: {
     borderRadius: 0,
-    borderWidth: 0,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, .2)',
   },
 });
 

@@ -15,7 +15,7 @@ import TransImg from 'images/L0_06_Signup/MusicTaste/Genre/Trans.png';
 export type GenreData = {
   id: number;
   name: string;
-  // description: string;  //TODO : description for korean
+  description: string;
   imageSource: ImageURISource;
 };
 
@@ -24,15 +24,15 @@ export type GenreData = {
 // };
 
 export const Genre: GenreData[] = [
-  {id: 1, name: 'Ambient', imageSource: AmbientImg},
-  {id: 2, name: 'Disco', imageSource: DiscoImg},
-  {id: 3, name: 'HipHop', imageSource: HiphopImg},
-  {id: 4, name: 'House', imageSource: HouseImg},
-  {id: 5, name: 'Jazz', imageSource: JazzImg},
-  {id: 6, name: 'Minimal', imageSource: MinimalImg},
-  {id: 7, name: 'RnB', imageSource: RnbImg},
-  {id: 8, name: 'Rock', imageSource: RockImg},
-  {id: 9, name: 'SoulPunk', imageSource: SoulpunkImg},
-  {id: 10, name: 'Techno', imageSource: TechnoImg},
-  {id: 11, name: 'Trans', imageSource: TransImg},
+  {id: 1, name: 'House', description: '하우스', imageSource: HouseImg},
+  {id: 2, name: 'Techno', description: '테크노', imageSource: TechnoImg},
+  {id: 3, name: 'Disco', description: '디스코', imageSource: DiscoImg},
+  {id: 4, name: 'HipHop', description: '힙합', imageSource: HiphopImg},
+  {id: 5, name: 'SoulPunk', description: '소울/펑크', imageSource: SoulpunkImg},
+  {id: 6, name: 'RnB', description: 'R&B', imageSource: RnbImg},
+  {id: 7, name: 'Jazz', description: '재즈', imageSource: JazzImg},
+  {id: 8, name: 'Rock', description: '락', imageSource: RockImg},
+  {id: 9, name: 'Minimal', description: '미니멀', imageSource: MinimalImg},
+  {id: 10, name: 'Trans', description: '트랜스', imageSource: TransImg},
+  {id: 11, name: 'Ambient', description: '앰비언트', imageSource: AmbientImg},
 ];

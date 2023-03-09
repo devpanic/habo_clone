@@ -10,7 +10,7 @@ import ShopImg from 'images/L0_06_Signup/MusicTaste/Where/Shop.png';
 export type WhereData = {
   id: number;
   name: string;
-  // description: string;  //TODO : description for korean
+  description: string;
   imageSource: ImageURISource;
 };
 
@@ -19,10 +19,10 @@ export type WhereData = {
 // };
 
 export const Where: WhereData[] = [
-  {id: 1, name: 'Bar', imageSource: BarImg},
-  {id: 2, name: 'Cafe', imageSource: CafeImg},
-  {id: 3, name: 'Club', imageSource: ClubImg},
-  {id: 4, name: 'CulturalPlace', imageSource: CulturalPlaceImg},
-  {id: 5, name: 'Restaurant', imageSource: RestaurantImg},
-  {id: 6, name: 'Shop', imageSource: ShopImg},
+  {id: 1, name: 'Club', description: '클럽', imageSource: ClubImg},
+  {id: 2, name: 'Bar', description: '바/펍', imageSource: BarImg},
+  {id: 3, name: 'Restaurant', description: '레스토랑', imageSource: RestaurantImg},
+  {id: 4, name: 'Cafe', description: '카페', imageSource: CafeImg},
+  {id: 5, name: 'Shop', description: '샵', imageSource: ShopImg},
+  {id: 6, name: 'CulturalPlace', description: '문화공간', imageSource: CulturalPlaceImg},
 ];
