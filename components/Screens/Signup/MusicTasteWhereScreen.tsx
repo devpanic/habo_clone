@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React from 'react';
+// import {useState} from 'react';
 
 import {
   SafeAreaView,
   View,
-  ScrollView,
   Text,
   TouchableOpacity,
   Alert,
@@ -12,65 +11,62 @@ import {
   FlatList,
   ListRenderItem,
   Image,
-  Dimensions,
 } from 'react-native';
 
 //use react navigation
-import { HaboRouteList } from '../../../App';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {HaboRouteList} from '../../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 export type SplashScreenProps = NativeStackScreenProps<
   HaboRouteList,
   'MusicTasteWhere'
 >;
 
 // use navigation stack
-import { StackActions } from '@react-navigation/native';
+import {StackActions} from '@react-navigation/native';
 const popAction = StackActions.pop(1);
 
 // Get Where Data
-import { Where } from './GridImageData/Where';
-import type { WhereData } from './GridImageData/Where';
+import {Where} from './GridImageData/Where';
+import type {WhereData} from './GridImageData/Where';
 
-import { useForm, Controller } from 'react-hook-form';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {useForm, Controller} from 'react-hook-form';
 
 type FormValues = {
   selectedPlace: boolean[];
 };
 
-const MusicTasteWhereScreen = ({ navigation }: SplashScreenProps) => {
-  const { handleSubmit, control } = useForm<FormValues>();
+const MusicTasteWhereScreen = ({navigation}: SplashScreenProps) => {
+  const {handleSubmit, control} = useForm<FormValues>();
+  // const [isSelected, setIsSelected] = useState(false);
 
   const onSubmit = (data: FormValues) => {
     Alert.alert(JSON.stringify(data));
     navigation.navigate('MusicTasteGenre');
   };
 
-  const renderItem: ListRenderItem<WhereData> = ({ item }) => {
+  const renderItem: ListRenderItem<WhereData> = ({item}) => {
     return (
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        // padding: 5,
-      }}>
+      <View style={styles.renderItmContainer}>
         <Controller
           control={control}
           name={`selectedPlace.${item.id - 1}`}
           defaultValue={false}
-          render={({ field: { value, onChange } }) => (
+          render={({field: {value, onChange}}) => (
             <TouchableOpacity
-              // style={value ? {backgroundColor: 'red'} : {backgroundColor: 'blue'}}
               onPress={() => {
                 onChange(!value);
+                // TODO : every() or some() + isSelected
               }}>
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <View style={styles.renderItmBtn}>
                 <Image
                   source={item.imageSource}
-                  style={{ height: 140, width: '100%', maxWidth: 140 }}
+                  style={styles.renderItmBtnImg}
                   resizeMode="contain"
                 />
-                <View style={{ width: 140 }}>
-                  <Text style={{ textAlign: 'center', marginTop: 16 }}>{item.description}</Text>
+                <View style={styles.renderItmBtnTextWrapper}>
+                  <Text style={styles.renderItmBtnText}>
+                    {item.description}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -85,47 +81,56 @@ const MusicTasteWhereScreen = ({ navigation }: SplashScreenProps) => {
       <View style={styles.musicTasteHeader}>
         <TouchableOpacity
           style={styles.musicTasteHeaderImageWrapper}
-          onPress={() => navigation.dispatch(popAction)}
-        >
+          onPress={() => navigation.dispatch(popAction)}>
           <Image
             style={styles.musicTasteHeaderImage}
             source={require('images/L0_06_Signup/Arrow.png')}
             resizeMode="contain"
           />
         </TouchableOpacity>
-      </View>
-
-      <View>
-        <Text style={styles.musicTasteHeaderText}>
-          어떤 곳에서 음악을 듣고 싶나요?
-        </Text>
+        <View style={styles.musicTasteHeaderTextWrapper}>
+          <Text style={styles.musicTasteHeaderText}>
+            어떤 곳에서 음악을 듣고 싶나요?
+          </Text>
+        </View>
       </View>
 
       <View style={styles.musicTasteBody}>
-        <FlatList
-          data={Where}
-          renderItem={renderItem}
-          keyExtractor={(item) => `${item.id}`}
-          numColumns={2}
-          horizontal={false}
-          style={{
-            // margin: 34,
-            marginHorizontal: 34,
-            marginTop: 12,
-          }}
-          columnWrapperStyle={
-            {
-              // flex: 1,
+        <View>
+          <FlatList
+            data={Where}
+            renderItem={renderItem}
+            keyExtractor={item => `${item.id}`}
+            numColumns={2}
+            horizontal={false}
+            style={{
+              paddingHorizontal: 34,
+            }}
+            columnWrapperStyle={{
               justifyContent: 'space-between',
-              paddingTop: 32,
+              paddingBottom: 32,
+            }}
+            ListFooterComponent={
+              <View style={styles.listFooterBtn}>
+                <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+                  <Text style={styles.listFooterText}>다음에 할래요</Text>
+                </TouchableOpacity>
+              </View>
             }
-          }
-        />
+          />
+        </View>
       </View>
 
       <View style={styles.musicTasteFooter}>
-        <View style={styles.musicTasteNextBtnWrapper}>
+        <View
+          style={
+            // isSelected
+            //   ? styles.musicTasteNextBtnWrapper
+            //   : styles.musicTasteNextBtnWrapperDisabled
+            styles.musicTasteNextBtnWrapper
+          }>
           <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+            {/* disabled={!isSelected}> */}
             <Text style={styles.nextBtnText}>다음으로</Text>
           </TouchableOpacity>
         </View>
@@ -150,26 +155,48 @@ const styles = StyleSheet.create({
     marginVertical: 6.57,
     marginLeft: 9.33,
   },
+  musicTasteHeaderTextWrapper: {
+    paddingHorizontal: 4,
+    marginVertical: 36,
+  },
   musicTasteHeaderText: {
     fontWeight: '700',
     fontSize: 24,
     color: '#000000',
     marginLeft: 4,
-    // marginBottom: 48,
   },
   musicTasteBody: {
+    flex: 1,
   },
-  WhereWrapper: {
+  listFooterBtn: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 12,
+    marginBottom: 100,
+    color: 'rgba(0, 0, 0, .5)',
   },
-  WhereItem: {
+  listFooterText: {
+    color: 'rgba(0, 0, 0, .5)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, .5)',
   },
-  WhereImage: {
+  renderItmContainer: {flexDirection: 'row', justifyContent: 'center'},
+  renderItmBtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  renderItmBtnImg: {height: 140, width: '100%', maxWidth: 140},
+  renderItmBtnTextWrapper: {width: 140},
+  renderItmBtnText: {textAlign: 'center', marginTop: 16, color: '#000000'},
   musicTasteFooter: {
     marginTop: 'auto',
   },
   musicTasteNextBtnWrapper: {
     backgroundColor: '#000000',
+    paddingVertical: 24,
+  },
+  musicTasteNextBtnWrapperDisabled: {
+    backgroundColor: 'red',
     paddingVertical: 24,
   },
   nextBtnText: {

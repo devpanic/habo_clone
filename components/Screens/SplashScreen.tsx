@@ -9,10 +9,17 @@ export type SplashScreenProps = NativeStackScreenProps<
   'SplashScreen'
 >;
 
+import {CommonActions} from '@react-navigation/native';
+
 const SplashScreen = ({navigation}: SplashScreenProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigation.navigate('Permission');
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: 'Permission'}],
+        }),
+      );
     }, 3000);
     return () => clearTimeout(timeout);
   });

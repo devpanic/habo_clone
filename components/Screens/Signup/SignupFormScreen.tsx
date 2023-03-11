@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
 
 import {
@@ -64,13 +64,13 @@ const countryMap: CountryMap = {
 const SignupFormScreen = ({navigation}: SplashScreenProps) => {
   const defaultValues = {
     email: 'abc@gmail.com', //TODO get email from oauth
-  }
+  };
 
   const {handleSubmit, control, reset} = useForm<FormValues>();
 
   useEffect(() => {
-    reset({ ...defaultValues });
-   }, []);
+    reset({...defaultValues});
+  }, []);
 
   const [nickNameFocus, setNickNameFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
@@ -85,7 +85,12 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
       setServiceTermAgreed(true);
       setPrivacyTermAgreed(true);
       setMarketTermAgreed(true);
-    } else if (!totalAgreed && serviceTermAgreed && privacyTermAgreed && marketingTermAgreed) {
+    } else if (
+      !totalAgreed &&
+      serviceTermAgreed &&
+      privacyTermAgreed &&
+      marketingTermAgreed
+    ) {
       setServiceTermAgreed(false);
       setPrivacyTermAgreed(false);
       setMarketTermAgreed(false);
@@ -94,7 +99,7 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
 
   useEffect(() => {
     if (serviceTermAgreed && privacyTermAgreed && marketingTermAgreed) {
-      setTotalAgreed(true)
+      setTotalAgreed(true);
     } else {
       setTotalAgreed(false);
     }
@@ -196,7 +201,7 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
               <Controller
                 control={control}
                 name="email"
-                defaultValue=''
+                defaultValue=""
                 render={({field: {onChange, value}}) => (
                   <TextInput
                     style={styles.textInput}
@@ -289,7 +294,9 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
                       }}
                       disableBuiltInState
                       style={
-                        totalAgreed ? styles.checkboxNotChecked : styles.checkbox
+                        totalAgreed
+                          ? styles.checkboxNotChecked
+                          : styles.checkbox
                       }
                       innerIconStyle={styles.checkboxBorder}
                       iconStyle={styles.checkboxBorder}
@@ -303,7 +310,6 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
                     />
                   )}
                 />
-                
               </View>
             </View>
 
@@ -320,7 +326,9 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
                       setServiceTermAgreed(!serviceTermAgreed);
                     }}
                     style={
-                      serviceTermAgreed ? styles.checkboxNotChecked : styles.checkbox
+                      serviceTermAgreed
+                        ? styles.checkboxNotChecked
+                        : styles.checkbox
                     }
                     disableBuiltInState
                     innerIconStyle={styles.checkboxBorder}
@@ -335,7 +343,6 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
                   />
                 )}
               />
-              
             </View>
 
             {/* 개인정보 처리 방침 동의 */}
@@ -352,7 +359,9 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
                     }}
                     disableBuiltInState
                     style={
-                      privacyTermAgreed ? styles.checkboxNotChecked : styles.checkbox
+                      privacyTermAgreed
+                        ? styles.checkboxNotChecked
+                        : styles.checkbox
                     }
                     innerIconStyle={styles.checkboxBorder}
                     iconStyle={styles.checkboxBorder}
@@ -381,7 +390,9 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
                       setMarketTermAgreed(!marketingTermAgreed);
                     }}
                     style={
-                      marketingTermAgreed ? styles.checkboxNotChecked : styles.checkbox
+                      marketingTermAgreed
+                        ? styles.checkboxNotChecked
+                        : styles.checkbox
                     }
                     disableBuiltInState
                     innerIconStyle={styles.checkboxBorder}
@@ -401,11 +412,15 @@ const SignupFormScreen = ({navigation}: SplashScreenProps) => {
         </View>
       </ScrollView>
       <View style={styles.signupFormFooter}>
-        <View style={!serviceTermAgreed || !privacyTermAgreed ? styles.signupFormNextBtnWrapperDisabled : styles.signupFormNextBtnWrapper}>
+        <View
+          style={
+            !serviceTermAgreed || !privacyTermAgreed
+              ? styles.signupFormNextBtnWrapperDisabled
+              : styles.signupFormNextBtnWrapper
+          }>
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
-            disabled={!serviceTermAgreed || !privacyTermAgreed}
-          >
+            disabled={!serviceTermAgreed || !privacyTermAgreed}>
             <Text style={styles.nextBtnText}>다음으로</Text>
           </TouchableOpacity>
         </View>

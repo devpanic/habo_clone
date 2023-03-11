@@ -35,4 +35,5 @@ export const Genre: GenreData[] = [
   {id: 9, name: 'Minimal', description: '미니멀', imageSource: MinimalImg},
   {id: 10, name: 'Trans', description: '트랜스', imageSource: TransImg},
   {id: 11, name: 'Ambient', description: '앰비언트', imageSource: AmbientImg},
+  {id: 12, name: '', description: '', imageSource: null},
 ];
