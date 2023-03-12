@@ -15,7 +15,7 @@ import {
 //use react navigation
 import {HaboRouteList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-export type SplashScreenProps = NativeStackScreenProps<
+export type ScreenNavigationProps = NativeStackScreenProps<
   HaboRouteList,
   'MusicTasteGenre'
 >;
@@ -34,7 +34,7 @@ type FormValues = {
   selectedGenre: boolean[];
 };
 
-const MusicTasteGenreScreen = ({navigation}: SplashScreenProps) => {
+const MusicTasteGenreScreen = ({navigation}: ScreenNavigationProps) => {
   const {handleSubmit, control} = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
@@ -108,8 +108,10 @@ const MusicTasteGenreScreen = ({navigation}: SplashScreenProps) => {
               paddingBottom: 24,
             }}
             ListFooterComponent={
-              <View style={styles.listFooterBtn}>
-                <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+              <View style={styles.listFooterBtnWrapper}>
+                <TouchableOpacity
+                  onPress={handleSubmit(onSubmit)}
+                  style={styles.listFooterBtn}>
                   <Text style={styles.listFooterText}>다음에 할래요</Text>
                 </TouchableOpacity>
               </View>
@@ -158,12 +160,17 @@ const styles = StyleSheet.create({
   musicTasteBody: {
     flex: 1,
   },
-  listFooterBtn: {
+  listFooterBtnWrapper: {
     width: '100%',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: 12,
     marginBottom: 100,
     color: 'rgba(0, 0, 0, .5)',
+  },
+  listFooterBtn: {
+    width: 77,
+    borderBottomColor: 'rgba(0, 0, 0, .5)',
+    borderBottomWidth: 1,
   },
   listFooterText: {
     color: 'rgba(0, 0, 0, .5)',

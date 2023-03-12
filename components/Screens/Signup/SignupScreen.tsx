@@ -15,7 +15,10 @@ import {
 //use react navigation
 import {HaboRouteList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-export type SplashScreenProps = NativeStackScreenProps<HaboRouteList, 'Signup'>;
+export type ScreenNavigationProps = NativeStackScreenProps<
+  HaboRouteList,
+  'Signup'
+>;
 
 //import button images
 import AppleBtn from 'images/L0_03_Login/Apple.png';
@@ -73,7 +76,7 @@ const BtnItem = ({oauth, onPress}: oauthProps) => (
   </TouchableOpacity>
 );
 
-const SignupScreen = ({navigation}: SplashScreenProps) => {
+const SignupScreen = ({navigation}: ScreenNavigationProps) => {
   const renderItem: ListRenderItem<oauthData> = ({item}) => {
     return (
       <BtnItem
@@ -88,11 +91,11 @@ const SignupScreen = ({navigation}: SplashScreenProps) => {
       <View style={styles.topLogoContainer}>
         <ImageBackground
           style={styles.backgroundImage}
-          source={require('../../../assets/images/L0_03_Login/BgImg.png')}
+          source={require('images/L0_03_Login/BgImg.png')}
           resizeMode="cover">
           <Image
             style={styles.logo}
-            source={require('../../../assets/images/L0_01_Splash/Logo/White.png')}
+            source={require('images/L0_01_Splash/Logo/White.png')}
             resizeMode="contain"
           />
         </ImageBackground>
@@ -105,7 +108,7 @@ const SignupScreen = ({navigation}: SplashScreenProps) => {
           style={{width: '100%', paddingLeft: 16, paddingRight: 16}}
         />
         <TouchableOpacity
-          onPress={() => navigation.navigate('NonMember')}
+          onPress={() => navigation.navigate('SignupFinish')}
           style={styles.nonMemberBtn}>
           <Text style={{color: 'white'}}>비회원으로 둘러보기</Text>
         </TouchableOpacity>
@@ -117,7 +120,7 @@ const SignupScreen = ({navigation}: SplashScreenProps) => {
 const styles = StyleSheet.create({
   signupContainer: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#000000',
     width: '100%',
   },
   topLogoContainer: {
@@ -175,7 +178,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textColor: {
-    color: 'black',
+    color: '#000000',
     fontSize: 16,
   },
 });

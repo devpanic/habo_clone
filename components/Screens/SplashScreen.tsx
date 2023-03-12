@@ -4,14 +4,14 @@ import {Image, StyleSheet, SafeAreaView} from 'react-native';
 
 import {HaboRouteList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-export type SplashScreenProps = NativeStackScreenProps<
+export type ScreenNavigationProps = NativeStackScreenProps<
   HaboRouteList,
   'SplashScreen'
 >;
 
 import {CommonActions} from '@react-navigation/native';
 
-const SplashScreen = ({navigation}: SplashScreenProps) => {
+const SplashScreen = ({navigation}: ScreenNavigationProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigation.dispatch(

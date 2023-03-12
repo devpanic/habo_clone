@@ -11,12 +11,12 @@ import {
 //use react navigation
 import {HaboRouteList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-export type SplashScreenProps = NativeStackScreenProps<
+export type ScreenNavigationProps = NativeStackScreenProps<
   HaboRouteList,
   'Permission'
 >;
 
-const Permission = ({navigation}: SplashScreenProps) => {
+const Permission = ({navigation}: ScreenNavigationProps) => {
   return (
     <SafeAreaView style={styles.permissionContainer}>
       <View style={styles.permissionHeader}>

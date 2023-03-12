@@ -20,7 +20,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 // use react navigation
 import {HaboRouteList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-export type SplashScreenProps = NativeStackScreenProps<
+export type ScreenNavigationProps = NativeStackScreenProps<
   HaboRouteList,
   'SignupForm'
 >;
@@ -61,7 +61,7 @@ const countryMap: CountryMap = {
   [Country.BUSAN]: [SubCountry.SEOUL_NOWON, SubCountry.SEOUL_YONGSAN], // TODO: fixme
 };
 
-const SignupFormScreen = ({navigation}: SplashScreenProps) => {
+const SignupFormScreen = ({navigation}: ScreenNavigationProps) => {
   const defaultValues = {
     email: 'abc@gmail.com', //TODO get email from oauth
   };

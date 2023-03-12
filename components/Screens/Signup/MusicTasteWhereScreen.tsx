@@ -16,7 +16,7 @@ import {
 //use react navigation
 import {HaboRouteList} from '../../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-export type SplashScreenProps = NativeStackScreenProps<
+export type ScreenNavigationProps = NativeStackScreenProps<
   HaboRouteList,
   'MusicTasteWhere'
 >;
@@ -35,7 +35,7 @@ type FormValues = {
   selectedPlace: boolean[];
 };
 
-const MusicTasteWhereScreen = ({navigation}: SplashScreenProps) => {
+const MusicTasteWhereScreen = ({navigation}: ScreenNavigationProps) => {
   const {handleSubmit, control} = useForm<FormValues>();
   // const [isSelected, setIsSelected] = useState(false);
 
@@ -111,8 +111,10 @@ const MusicTasteWhereScreen = ({navigation}: SplashScreenProps) => {
               paddingBottom: 32,
             }}
             ListFooterComponent={
-              <View style={styles.listFooterBtn}>
-                <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+              <View style={styles.listFooterBtnWrapper}>
+                <TouchableOpacity
+                  onPress={handleSubmit(onSubmit)}
+                  style={styles.listFooterBtn}>
                   <Text style={styles.listFooterText}>다음에 할래요</Text>
                 </TouchableOpacity>
               </View>
@@ -120,7 +122,6 @@ const MusicTasteWhereScreen = ({navigation}: SplashScreenProps) => {
           />
         </View>
       </View>
-
       <View style={styles.musicTasteFooter}>
         <View
           style={
@@ -168,17 +169,20 @@ const styles = StyleSheet.create({
   musicTasteBody: {
     flex: 1,
   },
-  listFooterBtn: {
+  listFooterBtnWrapper: {
     width: '100%',
     alignItems: 'center',
     marginTop: 12,
     marginBottom: 100,
     color: 'rgba(0, 0, 0, .5)',
   },
+  listFooterBtn: {
+    width: 77,
+    borderBottomColor: 'rgba(0, 0, 0, .5)',
+    borderBottomWidth: 1,
+  },
   listFooterText: {
     color: 'rgba(0, 0, 0, .5)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, .5)',
   },
   renderItmContainer: {flexDirection: 'row', justifyContent: 'center'},
   renderItmBtn: {
