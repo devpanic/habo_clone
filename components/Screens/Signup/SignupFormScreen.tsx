@@ -106,11 +106,7 @@ const SignupFormScreen = ({navigation}: ScreenNavigationProps) => {
   }, [serviceTermAgreed, privacyTermAgreed, marketingTermAgreed]);
 
   const checkboxImage = () => {
-    return (
-      <Image
-        source={require('../../../assets/images/L0_06_Signup/Checked.png')}
-      />
-    );
+    return <Image source={require('images/L0_06_Signup/Checked.png')} />;
   };
 
   const validateEmail = (email: string) => {
@@ -141,7 +137,7 @@ const SignupFormScreen = ({navigation}: ScreenNavigationProps) => {
           <View style={styles.signupFormHeaderImageWrapper}>
             <Image
               style={styles.signupFormHeaderImage}
-              source={require('../../../assets/images/L0_06_Signup/Arrow.png')}
+              source={require('images/L0_06_Signup/Arrow.png')}
               resizeMode="contain"
             />
           </View>
